@@ -11,9 +11,7 @@
 
 # 代码示例
 ```cpp
-auto router = enginx::createRoute();
 auto app = enginx::createApplication();
-auto parser = enginx::defaultParser();
 
 auto helloApi = [](enginx::Context & ctx,enginx::Next next){
      ctx.end("Hello World");

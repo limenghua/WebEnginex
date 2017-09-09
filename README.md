@@ -17,6 +17,6 @@ auto helloApi = [](enginx::Context & ctx,enginx::Next next){
      ctx.end("Hello World");
 };
 
-app.use(helloApi);
+app->use(helloApi);
 enginx::register(app);
 ```

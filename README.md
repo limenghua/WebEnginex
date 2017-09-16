@@ -1,8 +1,10 @@
 # WebEnginX
 
- * 一款易于扩展的C++ rest server 后端框架，类似于nodejs中的express
+ * 一款易于扩展的C++ rest server 后端框架，类似于nodejs中的koa框架。
+ * 实现最大程度参考koa框架
  * 前端暂时定位nginx
  * 后端业务使用C++语言实现。
+ * C++会借助variant 实现部分动态特性。
 
 # 开发目标:
 

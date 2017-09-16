@@ -12,6 +12,11 @@
 
  * 简易的中间件开发
 
+# 应用架构
+
+![avatar](./doc/image/app-struct.jpg)
+
+
 # 代码示例
 ```cpp
 auto app = enginx::createApplication();
@@ -23,3 +28,4 @@ auto helloApi = [](enginx::Context & ctx,enginx::MiddleWare & next){
 app->use(helloApi);
 enginx::register(app);
 ```
+

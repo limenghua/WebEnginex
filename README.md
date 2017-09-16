@@ -16,7 +16,7 @@
 ```cpp
 auto app = enginx::createApplication();
 
-auto helloApi = [](enginx::Context & ctx,enginx::Next next){
+auto helloApi = [](enginx::Context & ctx,enginx::MiddleWare & next){
      ctx.end("Hello World");
 };
 

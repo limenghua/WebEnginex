@@ -17,16 +17,28 @@
 
 ![avatar](./doc/image/app-struct.jpg)
 
+# 参考引用项目
 
-# 代码示例
+* [websocketpp](https://github.com/zaphoyd/websocketpp)
+* [crow](https://github.com/ipkn/crow)
+* [cppcms](https://github.com/artyom-beilis/cppcms)
+* [cinatra](https://github.com/topcpporg/cinatra)
+* [expresspp](https://github.com/limenghua/expresspp)
+
+# 目标代码示例
 ```cpp
-auto app = enginx::createApplication();
+#include <enginx/enginx.hpp>
 
-auto helloApi = [](enginx::Context & ctx,enginx::MiddleWare & next){
-     ctx.end("Hello World");
-};
+int enginx_main(int argc,char ** argv)
+{
+    auto app = enginx::createApplication();
 
-app->use(helloApi);
-enginx::register(app);
+    auto helloApi = [](enginx::Context & ctx,enginx::MiddleWare & next){
+        ctx.end("Hello World");
+    };
+
+    app->use(helloApi);
+    enginx::register(app);
+}
 ```
 

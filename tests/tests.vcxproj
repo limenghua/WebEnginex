@@ -138,7 +138,9 @@
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="componse-test.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="middleware-test.cpp" />
     <ClCompile Include="request-test.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

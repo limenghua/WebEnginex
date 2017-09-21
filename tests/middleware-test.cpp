@@ -7,8 +7,6 @@
 using namespace enginex;
 using namespace concurrency;
 
-typedef task<void> task0;
-
 TEST_GROUP(MiddleWare)
 {
 	void teardown()
@@ -26,48 +24,39 @@ TEST(MiddleWare, Construct)
 
 TEST(MiddleWare, ConstructWithLambda)
 {
-	Context txt;
-	Middleware handler = [&](Context& ctx, Middleware &next)->task0 {
-		return create_task([&]() {
-			mock().actualCall("ConstructWithLambda");
-		});
+	Middleware handler = [](Context& ctx, NextHandler next)->task0 {
+		return task0();
 	};
 
-	mock().expectOneCall("ConstructWithLambda");
-	auto task = handler(txt, handler);
-	task.wait();
-	mock().checkExpectations();
+	CHECK_TRUE(!!handler);
 }
 
-TEST(MiddleWare, ConvertToTaskFuction)
+TEST(MiddleWare, CallMiddlewareAsAFunction)
 {
 	Context txt;
-	auto handler = [&](Context& ctx, Middleware &next)->void {
-		mock().actualCall("ConvertToTaskFuction");
+	int callTimes = 0;
+	Middleware handler = [&](Context& ctx, NextHandler next)->task0 {
+		callTimes++;
+		return create_task([]() {});
 	};
-	Middleware middle = Middleware::Convert(handler);
 	
-	mock().expectOneCall("ConvertToTaskFuction");
-	auto task = middle(txt, middle);
-	task.wait();
-	mock().checkExpectations();
+	handler(txt, nullptr).wait();
+	CHECK_EQUAL(callTimes, 1);
 }
 
 TEST(MiddleWare, Copyable)
 {
 	Context txt;
-	auto handler = [&](Context& ctx, Middleware &next)->void {
-		mock().actualCall("ConvertToTaskFuction");
+	int callTimes = 0;
+	auto handler = [&](Context& ctx, NextHandler next)->task0 {
+		callTimes++;
+		return create_task([]() {});
 	};
-	Middleware middle = Middleware::Convert(handler);
 
-	std::vector<Middleware> middles = { middle,middle };
-
-	mock().expectNCalls(2, "ConvertToTaskFuction");
-
+	std::vector<Middleware> middles = { handler,handler };
 	for (auto & mid : middles) {
-		mid(txt, mid).wait();
+		//mid(txt, nullptr).get();
 	}
-	
-	mock().checkExpectations();
+
+	CHECK_EQUAL(callTimes, 2);
 }

@@ -1,10 +1,8 @@
 #include <CppUTest/TestHarness.h>
+#include <CppUTestExt/MockSupport.h>
 #include <ppltasks.h>
-#include <enginex/context.h>
-#include <functional>
+#include <enginex/middleware.h>
 #include <vector>
-
-#include<enginex/middleware.h>
 
 using namespace enginex;
 using namespace concurrency;
@@ -13,7 +11,10 @@ typedef task<void> task0;
 
 TEST_GROUP(MiddleWare)
 {
-
+	void teardown()
+	{
+		mock().clear();
+	}
 };
 
 TEST(MiddleWare, Construct)
@@ -26,29 +27,47 @@ TEST(MiddleWare, Construct)
 TEST(MiddleWare, ConstructWithLambda)
 {
 	Context txt;
-	bool called = false;
 	Middleware handler = [&](Context& ctx, Middleware &next)->task0 {
 		return create_task([&]() {
-			called = true;
+			mock().actualCall("ConstructWithLambda");
 		});
 	};
 
+	mock().expectOneCall("ConstructWithLambda");
 	auto task = handler(txt, handler);
 	task.wait();
-	CHECK_TRUE(called);
+	mock().checkExpectations();
 }
 
 TEST(MiddleWare, ConvertToTaskFuction)
 {
 	Context txt;
-	bool called = false;
 	auto handler = [&](Context& ctx, Middleware &next)->void {
-		called = true;
+		mock().actualCall("ConvertToTaskFuction");
 	};
 	Middleware middle = Middleware::Convert(handler);
 	
-
+	mock().expectOneCall("ConvertToTaskFuction");
 	auto task = middle(txt, middle);
 	task.wait();
-	CHECK_TRUE(called);
+	mock().checkExpectations();
+}
+
+TEST(MiddleWare, Copyable)
+{
+	Context txt;
+	auto handler = [&](Context& ctx, Middleware &next)->void {
+		mock().actualCall("ConvertToTaskFuction");
+	};
+	Middleware middle = Middleware::Convert(handler);
+
+	std::vector<Middleware> middles = { middle,middle };
+
+	mock().expectNCalls(2, "ConvertToTaskFuction");
+
+	for (auto & mid : middles) {
+		mid(txt, mid).wait();
+	}
+	
+	mock().checkExpectations();
 }

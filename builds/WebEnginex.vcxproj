@@ -134,6 +134,7 @@
     </Lib>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="..\include\enginex\componse.h" />
     <ClInclude Include="..\include\enginex\context.h" />
     <ClInclude Include="..\include\enginex\middleware.h" />
     <ClInclude Include="..\include\enginex\request.h" />

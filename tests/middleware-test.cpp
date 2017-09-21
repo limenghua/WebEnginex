@@ -16,6 +16,13 @@ TEST_GROUP(MiddleWare)
 
 };
 
+TEST(MiddleWare, Construct)
+{
+	Middleware handler;
+
+	CHECK_TRUE(!handler);
+}
+
 TEST(MiddleWare, ConstructWithLambda)
 {
 	Context txt;
@@ -29,5 +36,19 @@ TEST(MiddleWare, ConstructWithLambda)
 	auto task = handler(txt, handler);
 	task.wait();
 	CHECK_TRUE(called);
+}
 
+TEST(MiddleWare, ConvertToTaskFuction)
+{
+	Context txt;
+	bool called = false;
+	auto handler = [&](Context& ctx, Middleware &next)->void {
+		called = true;
+	};
+	Middleware middle = Middleware::Convert(handler);
+	
+
+	auto task = middle(txt, middle);
+	task.wait();
+	CHECK_TRUE(called);
 }

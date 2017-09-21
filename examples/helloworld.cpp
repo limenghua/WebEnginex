@@ -4,7 +4,7 @@ int enginx_main(int argc,char ** argv)
 {
     auto app = enginx::createApplication();
 
-    auto helloApi = [](enginx::Context & ctx,enginx::MiddleWare & next){
+    auto helloApi = [](enginx::Context & ctx,enginx::NextHandler & next){
         ctx.end("Hello World");
     };
 

@@ -68,3 +68,42 @@ TEST(MiddleCompose, ComponseTwoMiddleware)
 	componseMiddleware(ctx, nullptr).wait();
 	mock().checkExpectations();
 }
+
+TEST(MiddleCompose, ComponseMoreMiddleware)
+{
+	bool called = false;
+	Middleware mw = TestMiddleware("ComponseTwoMiddleware");
+	Middleware mw2 = TestMiddleware("ComponseTwoMiddleware2");
+	std::vector<Middleware> middlewares = { mw,mw2,mw,mw2,mw2 };
+
+	auto componseMiddleware = Compose(middlewares);
+
+	Context ctx;
+	mock().expectNCalls(2, "ComponseTwoMiddleware");
+	mock().expectNCalls(3, "ComponseTwoMiddleware2");
+	componseMiddleware(ctx, nullptr).wait();
+	mock().checkExpectations();
+}
+
+TEST(MiddleCompose, MiddlewareNotCallNext)
+{
+	int calledTimes = 0;
+	Middleware callNextMw = [&](Context& ctx, NextHandler next) {
+		calledTimes++;
+		return next();
+	};
+
+	Middleware notCallNextMw = [&](Context& ctx, NextHandler next) {
+		calledTimes++;
+		return create_task([]() {});
+	};
+
+	std::vector<Middleware> middlewares = { callNextMw,notCallNextMw,callNextMw,callNextMw };
+
+	auto componseMiddleware = Compose(middlewares);
+
+	Context ctx;
+	componseMiddleware(ctx, nullptr).wait();
+
+	CHECK_EQUAL(calledTimes, 2);
+}

@@ -27,7 +27,7 @@
     <ClInclude Include="..\include\enginex\middleware.h">
       <Filter>头文件</Filter>
     </ClInclude>
-    <ClInclude Include="..\include\enginex\componse.h">
+    <ClInclude Include="..\include\enginex\compose.h">
       <Filter>头文件</Filter>
     </ClInclude>
   </ItemGroup>

@@ -138,7 +138,7 @@
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="componse-test.cpp" />
+    <ClCompile Include="compose-test.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="middleware-test.cpp" />
     <ClCompile Include="request-test.cpp" />

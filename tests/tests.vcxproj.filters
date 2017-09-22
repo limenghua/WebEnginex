@@ -21,10 +21,10 @@
     <ClCompile Include="request-test.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
-    <ClCompile Include="componse-test.cpp">
+    <ClCompile Include="middleware-test.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
-    <ClCompile Include="middleware-test.cpp">
+    <ClCompile Include="compose-test.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
   </ItemGroup>

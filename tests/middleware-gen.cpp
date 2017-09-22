@@ -16,3 +16,10 @@ enginex::Middleware TestMiddleware(std::string callName)
 		return create_task([=](){});
 	};
 }
+
+enginex::Middleware SimpleMiddleware()
+{
+	return [](Context &, NextHandler next) {
+		return create_task([]() {});
+	};
+}

@@ -3,3 +3,5 @@
 #include<string>
 
 enginex::Middleware TestMiddleware(std::string callName);
+
+enginex::Middleware SimpleMiddleware();

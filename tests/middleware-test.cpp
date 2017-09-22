@@ -34,29 +34,29 @@ TEST(MiddleWare, ConstructWithLambda)
 TEST(MiddleWare, CallMiddlewareAsAFunction)
 {
 	Context txt;
-	int callTimes = 0;
-	Middleware handler = [&](Context& ctx, NextHandler next)->task0 {
-		callTimes++;
-		return create_task([]() {});
+	Middleware handler = [&](Context& ctx, NextHandler next)->task0 {		
+		return create_task([]() {
+			mock().actualCall("CallMiddlewareAsAFunction");
+		});
 	};
 	
+	mock().expectOneCall("CallMiddlewareAsAFunction");
 	handler(txt, nullptr).wait();
-	CHECK_EQUAL(callTimes, 1);
+	mock().checkExpectations();
 }
 
 TEST(MiddleWare, Copyable)
 {
-	Context txt;
-	int callTimes = 0;
-	auto handler = [&](Context& ctx, NextHandler next)->task0 {
-		callTimes++;
-		return create_task([]() {});
+	Context ctx;
+	Middleware handler;
+	Middleware h = [&](Context& ctx, NextHandler next)->task0 {		
+		return create_task([]() {
+			mock().actualCall("Copyable"); 
+		});
 	};
 
-	std::vector<Middleware> middles = { handler,handler };
-	for (auto & mid : middles) {
-		//mid(txt, nullptr).get();
-	}
-
-	CHECK_EQUAL(callTimes, 2);
+	handler = h;
+	mock().expectOneCall("Copyable");
+	handler(ctx, nullptr).wait();
+	mock().checkExpectations();
 }

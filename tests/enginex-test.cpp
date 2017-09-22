@@ -1,4 +1,5 @@
 #include<CppUTest/TestHarness.h>
+#include <CppUTestExt/MockSupport.h>
 #include<enginex/enginex.h>
 #include "middlerware-gen.h"
 
@@ -17,7 +18,16 @@ TEST(WebEnginex, Constructor)
 TEST(WebEnginex, UseAMiddleware)
 {
 	WebEnginex::Pointer app = WebEnginex::Create();
-	auto middleware = SimpleMiddleware();
+	auto middleware1 = TestMiddleware("UseAMiddleware1");
+	auto middleware2 = TestMiddleware("UseAMiddleware2");
 
-	app->Use(middleware);
+	app->Use(middleware1);
+	app->Use(middleware2);
+
+	mock().expectNCalls(1, "UseAMiddleware1");
+	mock().expectNCalls(1, "UseAMiddleware2");
+
+	Context ctx;
+	app->Handle(ctx).wait();
+	mock().checkExpectations();
 }

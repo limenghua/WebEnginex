@@ -13,6 +13,9 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
+    <Filter Include="WebEnginex">
+      <UniqueIdentifier>{58206c7a-7c67-4ab2-b6cb-4e8c0462594c}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -27,5 +30,19 @@
     <ClCompile Include="compose-test.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
+    <ClCompile Include="..\src\compose.cpp">
+      <Filter>WebEnginex</Filter>
+    </ClCompile>
+    <ClCompile Include="enginex-test.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="middleware-gen.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="middlerware-gen.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

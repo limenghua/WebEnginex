@@ -5,20 +5,10 @@
 #include <vector>
 #include <ppltasks.h>
 
+#include "middlerware-gen.h"
+
 using namespace enginex;
 using namespace concurrency;
-
-Middleware TestMiddleware(std::string callName)
-{
-	return [callName](Context &, NextHandler next)->task0 {
-		return create_task([=]() {
-			mock().actualCall(callName.c_str());
-			if (next) {
-				return next();
-			}
-		});
-	};
-}
 
 
 TEST_GROUP(MiddleCompose)
@@ -106,4 +96,24 @@ TEST(MiddleCompose, MiddlewareNotCallNext)
 	componseMiddleware(ctx, nullptr).wait();
 
 	CHECK_EQUAL(calledTimes, 2);
+}
+
+TEST(MiddleCompose, InsideMiddlewareCall)
+{
+	int calledTimes = 0;
+	Middleware callNextMw = [&](Context& ctx, NextHandler next) {
+		calledTimes++;
+		return next();
+	};
+
+	std::vector<Middleware> insideMiddlewares = { callNextMw,callNextMw,callNextMw };
+	
+	auto insideMw = Compose(insideMiddlewares);
+	std::vector<Middleware> middlewares = { callNextMw,insideMw };
+	auto newMiddlewares = Compose(middlewares);
+
+	Context ctx;
+	newMiddlewares(ctx, nullptr).wait();
+
+	CHECK_EQUAL(calledTimes,4);
 }

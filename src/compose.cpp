@@ -1,5 +1,5 @@
-#pragma once
-#include<enginex/compose.h>
+#include "enginex/compose.h"
+
 #include <ppltasks.h>
 #include <enginex/middleware.h>
 #include <enginex/context.h>
@@ -46,7 +46,7 @@ namespace enginex {
 						return EmptyTask0();
 					}
 				}
-				NextHandler n = [i, this, &ctx, next]() {return Dispatch(i + 1, ctx, next); };
+				NextHandler n = [=]() {return Dispatch(i + 1, ctx, next); };
 				Middleware & fn = _middlewares[i];
 				return fn(ctx, n);
 			}

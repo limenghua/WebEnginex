@@ -24,7 +24,7 @@ TEST(MiddleWare, Construct)
 
 TEST(MiddleWare, ConstructWithLambda)
 {
-	Middleware handler = [](ContextPtr, NextHandler next)->task0 {
+	Middleware handler = [](ContextPtr, NextHandler)->task0 {
 		return task0();
 	};
 
@@ -33,7 +33,7 @@ TEST(MiddleWare, ConstructWithLambda)
 
 TEST(MiddleWare, CallMiddlewareAsAFunction)
 {
-	Middleware handler = [&]( ContextPtr , NextHandler next)->task0 {
+	Middleware handler = [&]( ContextPtr , NextHandler)->task0 {
 		return create_task([]() {
 			mock().actualCall("CallMiddlewareAsAFunction");
 		});

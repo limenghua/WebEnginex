@@ -39,6 +39,12 @@
     <ClCompile Include="middleware-gen.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
+    <ClCompile Include="..\src\message.cpp">
+      <Filter>WebEnginex</Filter>
+    </ClCompile>
+    <ClCompile Include="message-test.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="middlerware-gen.h">

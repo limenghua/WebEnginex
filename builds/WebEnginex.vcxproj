@@ -137,12 +137,14 @@
     <ClInclude Include="..\include\enginex\compose.h" />
     <ClInclude Include="..\include\enginex\context.h" />
     <ClInclude Include="..\include\enginex\enginex.h" />
+    <ClInclude Include="..\include\enginex\message.h" />
     <ClInclude Include="..\include\enginex\middleware.h" />
     <ClInclude Include="..\include\enginex\request.h" />
     <ClInclude Include="..\include\enginex\response.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\src\compose.cpp" />
+    <ClCompile Include="..\src\message.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

@@ -24,7 +24,7 @@ TEST(MiddleWare, Construct)
 
 TEST(MiddleWare, ConstructWithLambda)
 {
-	Middleware handler = [](Context& ctx, NextHandler next)->task0 {
+	Middleware handler = [](ContextPtr, NextHandler next)->task0 {
 		return task0();
 	};
 
@@ -33,23 +33,21 @@ TEST(MiddleWare, ConstructWithLambda)
 
 TEST(MiddleWare, CallMiddlewareAsAFunction)
 {
-	Context txt;
-	Middleware handler = [&](Context& ctx, NextHandler next)->task0 {		
+	Middleware handler = [&]( ContextPtr , NextHandler next)->task0 {
 		return create_task([]() {
 			mock().actualCall("CallMiddlewareAsAFunction");
 		});
 	};
 	
 	mock().expectOneCall("CallMiddlewareAsAFunction");
-	handler(txt, nullptr).wait();
+	handler(nullptr, nullptr).wait();
 	mock().checkExpectations();
 }
 
 TEST(MiddleWare, Copyable)
 {
-	Context ctx;
 	Middleware handler;
-	Middleware h = [&](Context& ctx, NextHandler next)->task0 {		
+	Middleware h = [&](ContextPtr, NextHandler)->task0 {
 		return create_task([]() {
 			mock().actualCall("Copyable"); 
 		});
@@ -57,6 +55,6 @@ TEST(MiddleWare, Copyable)
 
 	handler = h;
 	mock().expectOneCall("Copyable");
-	handler(ctx, nullptr).wait();
+	handler(nullptr, nullptr).wait();
 	mock().checkExpectations();
 }

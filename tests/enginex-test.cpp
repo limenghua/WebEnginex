@@ -27,7 +27,6 @@ TEST(WebEnginex, UseAMiddleware)
 	mock().expectNCalls(1, "UseAMiddleware1");
 	mock().expectNCalls(1, "UseAMiddleware2");
 
-	Context ctx;
-	app->Handle(ctx).wait();
+	app->Handle(nullptr).wait();
 	mock().checkExpectations();
 }

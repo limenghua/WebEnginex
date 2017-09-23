@@ -19,17 +19,16 @@ namespace enginex {
 			return shared_from_this();
 		}
 
-		task0 Handle(Context & ctx) {
-			auto ctxPtr = ContextPtr(new Context(std::move(ctx)));
+		task0 Handle(ContextPtr ctx) {
 			auto fn = Compose(_middlewares);
 			auto self = shared_from_this();
 
-			return fn(*ctxPtr, nullptr).then([ctxPtr, fn, self] {
-				return self->Response(ctxPtr);
+			return fn(ctx, nullptr).then([ctx, fn, self] {
+				return self->Response(ctx);
 			});
 		}
 
-		void Response(ContextPtr ctx) {
+		virtual void Response(ContextPtr ctx) {
 			
 		}
 

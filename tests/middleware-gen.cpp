@@ -8,7 +8,7 @@ using namespace concurrency;
 
 enginex::Middleware TestMiddleware(std::string callName)
 {
-	return [callName](Context &, NextHandler next)->task0 {
+	return [callName](ContextPtr, NextHandler next)->task0 {
 		mock().actualCall(callName.c_str());
 		if (next) {
 			return next();
@@ -19,7 +19,7 @@ enginex::Middleware TestMiddleware(std::string callName)
 
 enginex::Middleware SimpleMiddleware()
 {
-	return [](Context &, NextHandler next) {
+	return [](ContextPtr, NextHandler next) {
 		return create_task([]() {});
 	};
 }

@@ -37,9 +37,8 @@ TEST(MiddleCompose, ComponseOneMiddleware)
 
 	auto componseMiddleware = Compose(middlewares);
 
-	Context ctx;
 	mock().expectOneCall("ComponseOneMiddleware");
-	componseMiddleware(ctx, nullptr).wait();
+	componseMiddleware(nullptr, nullptr).wait();
 	mock().checkExpectations();
 
 }
@@ -48,14 +47,14 @@ TEST(MiddleCompose, ComponseTwoMiddleware)
 {
 	bool called = false;
 	Middleware mw = TestMiddleware("ComponseTwoMiddleware");
+	Middleware smw = SimpleMiddleware();
 
-	std::vector<Middleware> middlewares = { mw,mw };
+	std::vector<Middleware> middlewares = { mw,mw ,smw};
 
 	auto componseMiddleware = Compose(middlewares);
 
-	Context ctx;
 	mock().expectNCalls(2, "ComponseTwoMiddleware");
-	componseMiddleware(ctx, nullptr).wait();
+	componseMiddleware(nullptr, nullptr).wait();
 	mock().checkExpectations();
 }
 
@@ -68,22 +67,21 @@ TEST(MiddleCompose, ComponseMoreMiddleware)
 
 	auto componseMiddleware = Compose(middlewares);
 
-	Context ctx;
 	mock().expectNCalls(2, "ComponseTwoMiddleware");
 	mock().expectNCalls(3, "ComponseTwoMiddleware2");
-	componseMiddleware(ctx, nullptr).wait();
+	componseMiddleware(nullptr, nullptr).wait();
 	mock().checkExpectations();
 }
 
 TEST(MiddleCompose, MiddlewareNotCallNext)
 {
 	int calledTimes = 0;
-	Middleware callNextMw = [&](Context& ctx, NextHandler next) {
+	Middleware callNextMw = [&](ContextPtr , NextHandler next) {
 		calledTimes++;
 		return next();
 	};
 
-	Middleware notCallNextMw = [&](Context& ctx, NextHandler next) {
+	Middleware notCallNextMw = [&](ContextPtr, NextHandler next) {
 		calledTimes++;
 		return create_task([]() {});
 	};
@@ -92,8 +90,7 @@ TEST(MiddleCompose, MiddlewareNotCallNext)
 
 	auto componseMiddleware = Compose(middlewares);
 
-	Context ctx;
-	componseMiddleware(ctx, nullptr).wait();
+	componseMiddleware(nullptr, nullptr).wait();
 
 	CHECK_EQUAL(calledTimes, 2);
 }
@@ -101,7 +98,7 @@ TEST(MiddleCompose, MiddlewareNotCallNext)
 TEST(MiddleCompose, InsideMiddlewareCall)
 {
 	int calledTimes = 0;
-	Middleware callNextMw = [&](Context& ctx, NextHandler next) {
+	Middleware callNextMw = [&](ContextPtr, NextHandler next) {
 		calledTimes++;
 		return next();
 	};
@@ -113,7 +110,7 @@ TEST(MiddleCompose, InsideMiddlewareCall)
 	auto newMiddlewares = Compose(middlewares);
 
 	Context ctx;
-	newMiddlewares(ctx, nullptr).wait();
+	newMiddlewares(nullptr, nullptr).wait();
 
 	CHECK_EQUAL(calledTimes,4);
 }

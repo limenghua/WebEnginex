@@ -21,7 +21,7 @@ namespace enginex {
 				return std::shared_ptr<Composed>(new Composed(middlewares));
 			}
 
-			task0 call(Context & ctx, NextHandler next)
+			task0 call(ContextPtr ctx, NextHandler next)
 			{
 				_index = -1;
 				return Dispatch(0, ctx, next);
@@ -33,7 +33,7 @@ namespace enginex {
 				_index(-1)
 			{}
 
-			task0 Dispatch(int i, Context & ctx, NextHandler next)
+			task0 Dispatch(int i, ContextPtr ctx, NextHandler next)
 			{
 				if (i <= _index)throw std::exception("next() called multiple times");
 				_index = i;
@@ -60,7 +60,7 @@ namespace enginex {
 	{
 		auto composed = Composed::Create(middlewares);
 
-		return [composed](Context& ctx, NextHandler next) {
+		return [composed](ContextPtr ctx, NextHandler next) {
 			return composed->call(ctx, next);
 		};
 	}

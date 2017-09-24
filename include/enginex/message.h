@@ -15,7 +15,7 @@ public:
 	* @return The version string for this parser
 	*/
 	std::string const & GetVersion() const {
-		return _version;
+		return version;
 	}
 
 	/// Set HTTP parser Version
@@ -25,8 +25,8 @@ public:
 	*
 	* @param [in] version The value to set the HTTP version to.
 	*/
-	void SetVersion(std::string const & version) {
-		_version = version;
+	void SetVersion(std::string const & value) {
+		version = value;
 	}
 
 	/// Get the value of an HTTP header
@@ -91,7 +91,7 @@ public:
 	* @return The body of the HTTP message.
 	*/
 	std::string const & GetBody() const {
-		return _body;
+		return body;
 	}
 
 	/// Set body content
@@ -104,17 +104,16 @@ public:
 	* @param value String data to include as the body content.
 	*/
 	void SetBody(std::string const & value) {
-		_body = value;
+		body = value;
 	}
 	void SetBody(std::string && value) {
-		_body = value;
+		body = value;
 	}
 
 
-private:
-	std::string _version;
-	std::string _body;
-	CiMap _headers;
+	std::string version;
+	std::string body;
+	CiMap headers;
 };
 
 }//namespace enginex 

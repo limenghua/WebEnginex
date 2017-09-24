@@ -1,4 +1,7 @@
 #include<CppUTest/TestHarness.h>
+#include <enginex/request.h>
+
+using namespace enginex;
 
 TEST_GROUP(Request)
 {
@@ -7,5 +10,5 @@ TEST_GROUP(Request)
 
 TEST(Request, construct)
 {
-	STRCMP_EQUAL("hello", "hello");
+	RequestPtr req = Request::Create();
 }

@@ -66,6 +66,7 @@
   </ImportGroup>
   <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="..\builds\Boost.props" />
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup />
@@ -147,6 +148,7 @@
     <ClCompile Include="middleware-gen.cpp" />
     <ClCompile Include="middleware-test.cpp" />
     <ClCompile Include="request-test.cpp" />
+    <ClCompile Include="response-test.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="middlerware-gen.h" />

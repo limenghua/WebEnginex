@@ -141,6 +141,7 @@
     <ClInclude Include="..\include\enginex\middleware.h" />
     <ClInclude Include="..\include\enginex\request.h" />
     <ClInclude Include="..\include\enginex\response.h" />
+    <ClInclude Include="..\include\enginex\utils.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\src\compose.cpp" />

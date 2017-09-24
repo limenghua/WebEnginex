@@ -1,7 +1,7 @@
 #pragma once
 #include <string>
 #include <vector>
-#include <map>
+#include <enginex/utils.h>
 
 namespace enginex{
 
@@ -9,7 +9,6 @@ class Message
 {
 public:
 	using HeaderValues = std::vector<std::string>;
-	using HeaderList = std::map<std::string, HeaderValues>;
 public:
 	/// Get the HTTP version string
 	/**
@@ -38,8 +37,24 @@ public:
 	* @return The value associated with the given HTTP header key.
 	*/
 	std::string const & GetHeader(std::string const & key) const;
-	HeaderValues const & GetHeaders(std::string const & key) const;
-	HeaderList const & GetHeaders()const;
+	HeaderValues  GetHeaders(std::string const & key) const;
+	CiMap const & GetHeaders()const;
+	/// Set a value for an HTTP header, replacing an existing value
+	/**
+	* This method will set the value of the HTTP header `key` with the
+	* indicated value. If a header with the name `key` already exists, `val`
+	* will replace the existing value.
+	*
+	* @todo Make this method case insensitive.
+	* @todo Should there be any restrictions on which keys are allowed?
+	* @todo Exception free varient
+	*
+	* @see AppendHeader
+	*
+	* @param [in] key The name/key of the header to append to.
+	* @param [in] val The value to append.
+	*/
+	void SetHeader(std::string const & key, std::string const & val);
 	/// Append a value to an existing HTTP header
 	/**
 	* This method will set the value of the HTTP header `key` with the
@@ -56,22 +71,7 @@ public:
 	* @param [in] val The value to append.
 	*/
 	void AppendHeader(std::string const & key, std::string const & val);
-	/// Set a value for an HTTP header, replacing an existing value
-	/**
-	* This method will set the value of the HTTP header `key` with the
-	* indicated value. If a header with the name `key` already exists, `val`
-	* will replace the existing value.
-	*
-	* @todo Make this method case insensitive.
-	* @todo Should there be any restrictions on which keys are allowed?
-	* @todo Exception free varient
-	*
-	* @see AppendHeader
-	*
-	* @param [in] key The name/key of the header to append to.
-	* @param [in] val The value to append.
-	*/
-	void ReplaceHeader(std::string const & key, std::string const & val);
+
 
 	/// Remove a header from the parser
 	/**
@@ -114,7 +114,7 @@ public:
 private:
 	std::string _version;
 	std::string _body;
-	HeaderList _headers;
+	CiMap _headers;
 };
 
 }//namespace enginex 

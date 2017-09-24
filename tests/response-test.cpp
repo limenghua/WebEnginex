@@ -23,7 +23,7 @@ TEST(Response, PutSomeValues)
 
 	auto ptr = std::make_shared<int>(15);
 
-	res->Put("age", ptr);
+	res->Set("age", ptr);
 
 	auto val = res->Get<int>("age");
 
@@ -46,7 +46,7 @@ TEST(Response, PutSomeUserDefinedType)
 	ptr->a = 3;
 	ptr->b = 'b';
 
-	res->Put("MyStruct", ptr);
+	res->Set("MyStruct", ptr);
 
 	auto val = res->Get<MyStruct>("MyStruct");
 
@@ -69,7 +69,7 @@ TEST(Response, PutSomeUserDefinedTypeNoKeyName)
 	ptr->a = 3;
 	ptr->b = 'b';
 
-	res->Put(ptr);
+	res->Set(ptr);
 
 	auto val = res->Get<MyStruct>();
 

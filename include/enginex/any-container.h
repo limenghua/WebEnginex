@@ -8,23 +8,23 @@ namespace enginex {
 	class AnyPtrContainer {
 	public:
 		template<typename ServiceType>
-		void Put(const std::string &key, std::shared_ptr<ServiceType> ptr) {
+		void Set(const std::string &key, std::shared_ptr<ServiceType> ptr) {
 			container[key] = ptr;
 		}
 		template<typename ServiceType>
-		void Put(std::shared_ptr<ServiceType> ptr) {
+		void Set(std::shared_ptr<ServiceType> ptr) {
 			std::string key = typeid(ServiceType).raw_name();
-			Put<ServiceType>(key, ptr);
+			Set<ServiceType>(key, ptr);
 		}
 
 		template<typename ServiceType>
-		void Put(const std::string &key, std::weak_ptr<ServiceType> ptr) {
+		void Set(const std::string &key, std::weak_ptr<ServiceType> ptr) {
 			container[key] = ptr;
 		}
 		template<typename ServiceType>
-		void Put(std::weak_ptr<ServiceType> ptr) {
+		void Set(std::weak_ptr<ServiceType> ptr) {
 			std::string key = typeid(ServiceType).raw_name();
-			Put<ServiceType>(key, ptr);
+			Set<ServiceType>(key, ptr);
 		}
 
 		template<typename ServiceType>

@@ -70,6 +70,15 @@ TEST(AnyPtrContainer, Get)
 	CHECK_EQUAL(*(anyPtrContainer.Get<std::string>("hello")), "hello world");
 }
 
+TEST(AnyPtrContainer, GetTypeNotMatch)
+{
+	AnyPtrContainer anyPtrContainer;
+	auto ptr = std::make_shared<std::string>("hello world");
+	anyPtrContainer.Set("hello", ptr);
+
+	CHECK_TRUE(anyPtrContainer.Get<int>("hello") == nullptr);
+}
+
 TEST(AnyPtrContainer, Delete)
 {
 	AnyPtrContainer anyPtrContainer;

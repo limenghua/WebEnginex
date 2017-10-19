@@ -14,7 +14,7 @@ TEST(Response, Construct)
 {
 	ResponsePtr res = Response::Create();
 
-	//CHECK_TRUE(false);
+	CHECK_TRUE(res!= nullptr);
 }
 
 TEST(Response, PutSomeValues)

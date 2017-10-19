@@ -109,7 +109,6 @@ TEST(MiddleCompose, InsideMiddlewareCall)
 	std::vector<Middleware> middlewares = { callNextMw,insideMw };
 	auto newMiddlewares = Compose(middlewares);
 
-	Context ctx;
 	newMiddlewares(nullptr, nullptr).wait();
 
 	CHECK_EQUAL(calledTimes,4);

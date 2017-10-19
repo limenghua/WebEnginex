@@ -143,6 +143,7 @@
     <ClCompile Include="..\src\message.cpp" />
     <ClCompile Include="any-container-test.cpp" />
     <ClCompile Include="compose-test.cpp" />
+    <ClCompile Include="context-test.cpp" />
     <ClCompile Include="enginex-test.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="message-test.cpp" />

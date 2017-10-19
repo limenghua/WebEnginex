@@ -86,3 +86,18 @@ TEST(Response, GetNotExistValueShoudReturnNull)
 
 	CHECK_TRUE(val == nullptr);
 }
+
+TEST(Response, TheCustomerSenderCanBeSetInOutsid)
+{
+	ResponsePtr res = Response::Create();
+
+	using Sender = std::function<void(const char *buffer, size_t lenth)>;
+
+	Sender newSender = [](const char * buffer, size_t lenth) {
+
+	};
+
+	Sender oldSender = res->SetSender(newSender);
+
+	CHECK_TRUE(! oldSender);
+}

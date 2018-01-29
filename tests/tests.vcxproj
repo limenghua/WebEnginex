@@ -149,6 +149,7 @@
     <ClCompile Include="message-test.cpp" />
     <ClCompile Include="middleware-gen.cpp" />
     <ClCompile Include="middleware-test.cpp" />
+    <ClCompile Include="ppltask-test.cpp" />
     <ClCompile Include="request-test.cpp" />
     <ClCompile Include="response-test.cpp" />
   </ItemGroup>

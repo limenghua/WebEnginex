@@ -26,6 +26,14 @@ TEST(MiddleCompose, ComponseEmptyContainer)
 	auto componseMiddleware = Compose(middlewares);
 
 	CHECK_TRUE(componseMiddleware);
+
+	mock().expectOneCall("no middle ware");
+
+	componseMiddleware(nullptr, nullptr).then([]() {
+		mock().actualCall("no middle ware");
+	}).wait();
+	
+	mock().checkExpectations();
 }
 
 TEST(MiddleCompose, ComponseOneMiddleware)
